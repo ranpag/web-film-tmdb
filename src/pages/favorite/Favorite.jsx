@@ -4,6 +4,7 @@ import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { deleteFavorite, setFavorite } from "../../stores/actions/movieAction";
 import toast, { Toaster } from "react-hot-toast";
+import { AUTH_HEADERS } from "@/lib/api";
 
 const Favorite = () => {
 	const { favorites } = useSelector((state) => state.movie);
@@ -15,12 +16,7 @@ const Favorite = () => {
 		try {
 			const response = await axios.get(
 				"https://api.themoviedb.org/3/account/21559324/favorite/movies?language=en-US&page=1&sort_by=created_at.asc",
-				{
-					headers: {
-						Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-						Accept: "application/json",
-					},
-				}
+				{ headers: AUTH_HEADERS }
 			);
 			dispatch(setFavorite(response.data));
 			setIsloading(false);
@@ -36,9 +32,8 @@ const Favorite = () => {
 				{ media_type: "movie", media_id: movieId, favorite: false },
 				{
 					headers: {
-						Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-						"Content-Type": "application/json;charset=utf-8",
-						accept: "application/json",
+						...AUTH_HEADERS,
+						"Content-Type": "application/json;charset=utf-8"
 					},
 				}
 			);

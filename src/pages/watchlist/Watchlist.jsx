@@ -7,6 +7,7 @@ import {
 	setWatchList,
 } from "../../stores/actions/movieAction";
 import WatchlistView from "./WatchlistView";
+import { AUTH_HEADERS } from "@/lib/api";
 
 const Watchlist = () => {
 	const { watchlists } = useSelector((state) => state.movie);
@@ -18,12 +19,7 @@ const Watchlist = () => {
 		try {
 			const response = await axios.get(
 				"https://api.themoviedb.org/3/account/21559324/watchlist/movies?language=en-US&page=1&sort_by=created_at.asc",
-				{
-					headers: {
-						Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-						Accept: "application/json",
-					},
-				}
+				{ headers: AUTH_HEADERS }
 			);
 			dispatch(setWatchList(response.data));
 			setIsloading(false);
@@ -39,9 +35,8 @@ const Watchlist = () => {
 				{ media_type: "movie", media_id: movieId, watchlist: false },
 				{
 					headers: {
-						Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-						"Content-Type": "application/json;charset=utf-8",
-						accept: "application/json",
+						...AUTH_HEADERS,
+						"Content-Type": "application/json;charset=utf-8"
 					},
 				}
 			);

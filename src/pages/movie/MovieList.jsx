@@ -12,6 +12,7 @@ import {
 } from "../../stores/actions/movieAction";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Error404 from "../error/Error404";
+import { AUTH_HEADERS } from "@/lib/api";
 
 const MovieList = () => {
 	const { now_playings, trendings, upcomings, populars, top_rateds, filters } =
@@ -46,12 +47,7 @@ const MovieList = () => {
 		}
 
 		try {
-			const response = await axios.get(url, {
-				headers: {
-					Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-					Accept: "application/json",
-				},
-			});
+			const response = await axios.get(url, { headers: AUTH_HEADERS });
 
 			switch (list.toLowerCase()) {
 				case "playingnow":

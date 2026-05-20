@@ -5,6 +5,7 @@ import { deleteRating, setRatedMovie } from "../../stores/actions/movieAction";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useSearchParams } from "react-router-dom";
+import { AUTH_HEADERS } from "@/lib/api";
 
 const RatedMovie = () => {
 	const { rated_movies } = useSelector((state) => state.movie);
@@ -18,14 +19,8 @@ const RatedMovie = () => {
 		setIsloading(true);
 		try {
 			const response = await axios.get(
-				"https://api.themoviedb.org/3/account/21559324/rated/movies?page=" +
-					page,
-				{
-					headers: {
-						Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-						accept: "application/json",
-					},
-				}
+				"https://api.themoviedb.org/3/account/21559324/rated/movies?page=" + page,
+				{ headers: AUTH_HEADERS }
 			);
 			dispatch(setRatedMovie(response.data));
 			setIsloading(false);
@@ -39,12 +34,7 @@ const RatedMovie = () => {
 		try {
 			const response = await axios.delete(
 				`https://api.themoviedb.org/3/movie/${movieId}/rating`,
-				{
-					headers: {
-						Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-						accept: "application/json",
-					},
-				}
+				{ headers: AUTH_HEADERS }
 			);
 			if (response.data.status_code == 13) {
 				toast.success("Success delete rating");

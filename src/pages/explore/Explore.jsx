@@ -15,6 +15,7 @@ import {
 } from "../../stores/actions/movieAction";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { setPopularPeople } from "../../stores/actions/peopleAction";
+import { AUTH_HEADERS } from "@/lib/api";
 
 const Explore = () => {
 	const state = useSelector((state) => state);
@@ -22,14 +23,7 @@ const Explore = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [queryParams, setQueryParams] = useSearchParams();
 	const navigate = useNavigate();
-
-	const headers = useMemo(
-		() => ({
-			Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-			Accept: "application/json",
-		}),
-		[]
-	);
+	const headers = useMemo(() => (AUTH_HEADERS), []);
 
 	const tab = queryParams.get("tab");
 	const page = queryParams.get("page") ?? "1";

@@ -3,6 +3,7 @@ import DetailView from "./DetailMovieView";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { AUTH_HEADERS } from "@/lib/api";
 
 const DetailMovie = () => {
 	const [detailMovie, setDetailMovie] = useState({});
@@ -13,13 +14,7 @@ const DetailMovie = () => {
 	const [reviews, setReviews] = useState([]);
 	const { id } = useParams();
 	const [isLoading, setIsLoading] = useState(true);
-	const headers = useMemo(
-		() => ({
-			Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-			Accept: "application/json",
-		}),
-		[]
-	);
+	const headers = useMemo(() => (AUTH_HEADERS), []);
 
 	const addRating = async (movieId, rating) => {
 		try {
@@ -28,9 +23,8 @@ const DetailMovie = () => {
 				{ value: rating },
 				{
 					headers: {
-						Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-						"Content-Type": "application/json;charset=utf-8",
-						accept: "application/json",
+						...AUTH_HEADERS,
+						"Content-Type": "application/json;charset=utf-8"
 					},
 				}
 			);
@@ -53,9 +47,8 @@ const DetailMovie = () => {
 				{ media_type: "movie", media_id: movieId, favorite: true },
 				{
 					headers: {
-						Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-						"Content-Type": "application/json;charset=utf-8",
-						accept: "application/json",
+						...AUTH_HEADERS,
+						"Content-Type": "application/json;charset=utf-8"
 					},
 				}
 			);
@@ -76,9 +69,8 @@ const DetailMovie = () => {
 				{ media_type: "movie", media_id: movieId, watchlist: true },
 				{
 					headers: {
-						Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-						"Content-Type": "application/json;charset=utf-8",
-						accept: "application/json",
+						...AUTH_HEADERS,
+						"Content-Type": "application/json;charset=utf-8"
 					},
 				}
 			);

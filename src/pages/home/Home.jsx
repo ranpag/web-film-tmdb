@@ -10,6 +10,7 @@ import {
 	setTrending,
 } from "../../stores/actions/movieAction";
 import { setPopularPeople } from "../../stores/actions/peopleAction";
+import { AUTH_HEADERS } from "@/lib/api";
 
 const Home = () => {
 	const [video, setVideo] = useState("");
@@ -17,13 +18,7 @@ const Home = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const state = useSelector((state) => state);
 	const dispatch = useDispatch();
-	const headers = useMemo(
-		() => ({
-			Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-			Accept: "application/json",
-		}),
-		[]
-	);
+	const headers = useMemo(() => (AUTH_HEADERS), []);
 
 	const fetchNowPlaying = useCallback(async () => {
 		try {
