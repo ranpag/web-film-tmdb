@@ -4,7 +4,7 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/web-film-tmdb/',
+  base: process.env.VITE_BASE_URL,
   plugins: [react()],
   resolve: {
     alias: {

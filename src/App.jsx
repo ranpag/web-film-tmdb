@@ -16,7 +16,7 @@ import Watchlist from "./pages/watchlist/Watchlist";
 //
 const App = () => {
 	return (
-		<BrowserRouter>
+		<BrowserRouter basename={import.meta.env.VITE_BASE_URL}>
 			<Provider store={store}>
 				<Navbar />
 				<Routes>
